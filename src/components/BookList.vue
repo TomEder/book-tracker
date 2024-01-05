@@ -29,36 +29,48 @@
           </template>
           <template v-else>
             <!-- Display fields for a book -->
-            <p class="listItemTitle">{{ book.title }}</p>
-            <p class="listItemText">{{ book.author }}</p>
-            <p class="listItemText">{{ book.pages }} pages</p>
-            <div class="flex">
-              <p class="listItemText">pages read:</p>
-              <input
-                v-model.number="book.pagesRead"
-                class="pagesReadInput"
-                type="number"
-                :max="book.pages"
-              />
-            </div>
-            <!-- Progress bar -->
-            <div class="progress">
+            <p class="listItemTitle" @click="toggleVisibility(book, $event)">
+              {{ book.title }}
+            </p>
+            <transition name="fade">
               <div
-                class="progress-bar"
-                :style="{ width: bookProgress(book) + '%' }"
+                ref="content"
+                class="content"
+                :style="{ maxHeight: book.maxHeight }"
               >
-                <!-- Show percentage or "Done" based on bookProgress -->
-                {{
-                  Math.floor(bookProgress(book)) >= 100
-                    ? "Done"
-                    : Math.floor(bookProgress(book)) + "%"
-                }}
+                <p class="listItemText">{{ book.author }}</p>
+                <p class="listItemText">{{ book.pages }} pages</p>
+                <div class="flex">
+                  <p class="listItemText">pages read:</p>
+                  <input
+                    v-model.number="book.pagesRead"
+                    class="pagesReadInput"
+                    type="number"
+                    :max="book.pages"
+                  />
+                </div>
+                <!-- Progress bar -->
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    :style="{ width: bookProgress(book) + '%' }"
+                  >
+                    <!-- Show percentage or "Done" based on bookProgress -->
+                    {{
+                      Math.floor(bookProgress(book)) >= 100
+                        ? "Done"
+                        : Math.floor(bookProgress(book)) + "%"
+                    }}
+                  </div>
+                </div>
+                <button class="removeButton" @click="removeBook(index)">
+                  Remove
+                </button>
+                <button class="editButton" @click="editBook(index)">
+                  Edit
+                </button>
               </div>
-            </div>
-            <button class="removeButton" @click="removeBook(index)">
-              Remove
-            </button>
-            <button class="editButton" @click="editBook(index)">Edit</button>
+            </transition>
           </template>
         </li>
       </ul>
@@ -100,11 +112,37 @@ export default {
       this.$emit("save-book", index, updatedBook);
       // No need to set isEditing here, as it's handled in App.vue
     },
+    toggleVisibility(book, event) {
+      // Ensure there is a next element (safety check)
+      const contentElement = event.target.nextElementSibling;
+      if (contentElement) {
+        if (!book.maxHeight || book.maxHeight === "0px") {
+          book.maxHeight = `${contentElement.scrollHeight}px`;
+        } else {
+          book.maxHeight = "0px";
+        }
+      }
+    },
   },
 };
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.content {
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+  max-height: 0; /* Start with max-height as 0 */
+}
+
 .listContainer {
   @apply flex justify-center bg-slate-500 m-2 border-2 border-black rounded-md;
 }
