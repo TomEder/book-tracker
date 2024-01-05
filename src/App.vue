@@ -3,7 +3,7 @@
   <Header />
   <!-- In App.vue -->
   <BookForm :books="books" @book-added="handleBookAdded" />
-  <BookList :books="books" />
+  <book-list :books="books" @remove-book="handleBookRemoved" />
 </div>
 </template>
 
@@ -27,6 +27,9 @@ export default {
   methods: {
     handleBookAdded(newBook) {
         this.books.push(newBook);
+    },
+    handleBookRemoved(index) {
+        this.books.splice(index, 1);
     }
 }
 }
