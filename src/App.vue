@@ -1,38 +1,52 @@
 <template>
-<div>
-  <Header />
-  <!-- In App.vue -->
-  <BookForm :books="books" @book-added="handleBookAdded" />
-  <book-list :books="books" @remove-book="handleBookRemoved" />
-</div>
+  <div>
+    <Header />
+    <!-- In App.vue -->
+    <BookForm :books="books" @book-added="handleBookAdded" />
+    <book-list
+      :books="books"
+      @remove-book="handleBookRemoved"
+      @edit-book="handleEditBook"
+      @save-book="saveEditBook"
+    />
+  </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import BookForm from './components/BookForm.vue'
-import BookList from './components/BookList.vue'
+import Header from "./components/Header.vue";
+import BookForm from "./components/BookForm.vue";
+import BookList from "./components/BookList.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     BookForm,
-    BookList
+    BookList,
   },
   data() {
     return {
-      books: []
+      books: [],
     };
   },
 
   methods: {
     handleBookAdded(newBook) {
-        this.books.push(newBook);
+      newBook.isEditing = false; // Initialize the isEditing property
+      this.books.push(newBook);
     },
     handleBookRemoved(index) {
-        this.books.splice(index, 1);
-    }
-}
-}
+      this.books.splice(index, 1);
+    },
+    handleEditBook(index) {
+      this.books.forEach((book, i) => {
+        book.isEditing = i === index; // Directly set isEditing
+      });
+    },
+    saveEditBook(index, updatedBook) {
+      this.books[index] = { ...updatedBook, isEditing: false }; // Directly update the book
+    },
+  },
+};
 </script>
 
 <style>
