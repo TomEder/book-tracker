@@ -9,13 +9,13 @@
     <ul class="list">
         <li class="listItem" v-for="(book, index) in books" :key="index">
             <p class="listItemTitle ">
-                Name: {{ book.title }}
+                {{ book.title }}
             </p> 
             <p class="listItemAuthor">
-                Author: {{ book.author }} 
+                {{ book.author }} 
             </p>
             <p class="listItemPages">
-                Pages: {{ book.pages }}
+                {{ book.pages }} pages
             </p>
             <p>
                 pages read:
