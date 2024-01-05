@@ -45,6 +45,7 @@ export default {
         pages: this.newBook.pages,
         pagesRead: 0, // Initialize pagesRead
         isEditing: false, // Initialize isEditing
+        isVisible: true, // Initialize isVisible
       };
 
       this.$emit("book-added", book); // Emit an event to the parent

@@ -31,7 +31,9 @@ export default {
 
   methods: {
     handleBookAdded(newBook) {
+      newBook.isEditing = false;
       newBook.isEditing = false; // Initialize the isEditing property
+      newBook.isVisible = true; // Initialize the isVisible property
       this.books.push(newBook);
     },
     handleBookRemoved(index) {
