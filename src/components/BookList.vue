@@ -11,16 +11,18 @@
             <p class="listItemTitle ">
                 {{ book.title }}
             </p> 
-            <p class="listItemAuthor">
+            <p class="listItemText">
                 {{ book.author }} 
             </p>
-            <p class="listItemPages">
+            <p class="listItemText">
                 {{ book.pages }} pages
             </p>
-            <p>
-                pages read:
+            <div class="flex">
+                <p class="listItemText">
+                    pages read:
+                </p>
                 <input class="pagesInput" type="number" v-model="book.pagesRead" :max="book.pages">
-            </p>
+            </div>
             <!-- Progress bar -->
             <div class="progress">
       <div class="progress-bar" :style="{ width: bookProgress(book) + '%' }">
@@ -28,6 +30,7 @@
         {{ Math.floor(bookProgress(book)) >= 100 ? 'Done' : Math.floor(bookProgress(book)) + '%' }}
       </div>
     </div>
+    <button class="removeButton" @click="removeBook(index)">Remove</button>
         </li>
     </ul>
 </div>
@@ -56,8 +59,12 @@ export default {
     methods: {
         bookProgress(book) {
             return book.pagesRead / book.pages * 100;
-        }
+        },
+        removeBook(index) {
+        this.$emit('remove-book', index);
     }
+    }
+
 }
 </script>
 
@@ -75,15 +82,15 @@ export default {
     }
 
     .listItemTitle {
-        @apply text-xl font-bold;
+        @apply text-2xl font-bold;
     }
 
-    .listItemAuthor {
-        @apply text-lg;
+    .listItemText {
+        @apply text-lg mt-2;
     }
 
-    .listItemPages {
-        @apply text-lg;
+    .removeButton {
+        @apply bg-red-500 hover:bg-red-700 text-white text-lg font-bold py-2 px-4 rounded mt-2;
     }
 
     .progress {
@@ -95,11 +102,11 @@ export default {
 }
 
 .progress-bar {
-    @apply h-4 bg-green-500 pr-2 pb-5 text-right text-sm text-white rounded transition-all duration-300 w-full;
+    @apply h-4 mt-2 bg-green-500 pr-2 pb-5 text-right text-sm text-white rounded transition-all duration-300 w-full;
 }
 
 
 .pagesInput {
-    @apply w-20;
+    @apply w-20 h-8 mt-2;
 }
 </style>
