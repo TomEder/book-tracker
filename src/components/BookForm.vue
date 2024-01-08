@@ -1,6 +1,8 @@
 <template lang="">
+  <div class="modalBackground" @click.self="closeModal">
   <div class="formContainer">
     <h4 class="formHeader">Add a book</h4>
+    <button @click="closeModal" class="closeButton">X</button>
     <form class="inputContainer" @submit.prevent="addBook" action="">
       <input
         class="formInput"
@@ -23,6 +25,7 @@
       <button class="formButton" type="submit">Add</button>
     </form>
   </div>
+</div>
 </template>
 <script>
 export default {
@@ -54,13 +57,31 @@ export default {
       this.newBook.title = "";
       this.newBook.author = "";
       this.newBook.pages = 0;
+      this.$emit("close");
     },
+    closeModal() {
+    console.log("cloing modal")
+    this.$emit('close');
+  },
   },
 };
 </script>
 <style>
+.modalBackground {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10;
+}
+
 .formContainer {
-  @apply bg-slate-500 m-2 border-2 border-black rounded-md;
+  @apply bg-white p-4 rounded-lg;
+}
+
+.closeButton {
+  @apply absolute top-0 right-0 m-2 text-lg;
+}
+
+.formContainer {
+  @apply bg-gray-100 m-2 border rounded-md;
+  @apply relative;
 }
 .formHeader {
   @apply text-sm font-bold;

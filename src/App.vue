@@ -2,13 +2,14 @@
   <div>
     <Header />
     <!-- In App.vue -->
-    <BookForm :books="books" @book-added="handleBookAdded" />
+    <BookForm v-if="showModal" :books="books" @book-added="handleBookAdded" @close="showModal = false" />
     <book-list
-      :books="books"
-      @remove-book="handleBookRemoved"
-      @edit-book="handleEditBook"
-      @save-book="saveEditBook"
+    :books="books"
+    @remove-book="handleBookRemoved"
+    @edit-book="handleEditBook"
+    @save-book="saveEditBook"
     />
+    <button @click="showModal = true" class="addBookButton">+</button>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
   data() {
     return {
       books: [],
+      showModal: false,
     };
   },
 
@@ -53,12 +55,15 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #ffffff;
-  background-color: #2c3e50;
-  min-height: 100vh;
+
+  @apply min-h-screen bg-gray-100;
+}
+
+.addBookButton {
+  @apply bg-green-500 hover:bg-green-700 rounded-full text-2xl text-white font-bold px-4 py-2 fixed bottom-0 right-0 m-4;
 }
 </style>
