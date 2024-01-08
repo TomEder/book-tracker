@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div>
-      <h2>My books</h2>
-    </div>
     <div class="listContainer">
       <ul class="list">
         <li class="listItem" v-for="(book, index) in books" :key="book.id">
@@ -144,7 +141,7 @@ export default {
 }
 
 .listContainer {
-  @apply flex justify-center bg-slate-500 m-2 border-2 border-black rounded-md;
+  @apply flex justify-center bg-gray-100 m-2;
 }
 
 .editModeLabel {
@@ -176,11 +173,11 @@ export default {
 }
 
 .listItem {
-  @apply p-2 my-1 mx-2 text-left border-2 border-black rounded-md bg-slate-300 text-black;
+  @apply p-2 my-1 mx-2 text-left border-b-2 border-t-2 rounded-md bg-gray-100 text-black;
 }
 
 .listItemTitle {
-  @apply text-2xl font-bold;
+  @apply text-2xl text-gray-600 font-bold;
 }
 
 .listItemText {
@@ -188,11 +185,11 @@ export default {
 }
 
 .progress {
-  @apply flex w-11/12 bg-gray-300 rounded-md;
+  @apply flex w-11/12 mt-2 mb-2 bg-gray-300 rounded-md;
 }
 
 .progress-bar {
-  @apply h-4 mt-2 bg-green-500 pr-2 pb-5 text-right text-sm text-white rounded transition-all duration-300 w-full;
+  @apply h-4 bg-green-500 pr-2 pb-5 text-right text-sm text-white rounded transition-all duration-300 w-full;
 }
 
 .pagesInput {

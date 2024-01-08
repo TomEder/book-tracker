@@ -1,6 +1,6 @@
-<template lang="">
+<template>
     <div>
-        <p>{{title}}</p>
+        <p class="header-text">{{title}}</p>
     </div>
 </template>
 <script>
@@ -15,6 +15,8 @@ export default {
 
 }
 </script>
-<style lang="">
-    
+<style> 
+    .header-text {
+       @apply text-4xl font-bold text-gray-800;
+    }
 </style>
